@@ -171,8 +171,11 @@ open class YAxisRendererRadarChart: YAxisRenderer
             return
         }
         
-        let labelFont = yAxis.labelFont
-        let labelTextColor = yAxis.labelTextColor
+        var labelAttributes: [NSAttributedString.Key : Any] = [
+            .font: yAxis.labelFont,
+            .foregroundColor: yAxis.labelTextColor
+        ]
+        labelAttributes.merge(yAxis.labelAttributes) { (_, new) in new }
         
         let center = chart.centerOffsets
         let factor = chart.factor
@@ -198,10 +201,7 @@ open class YAxisRendererRadarChart: YAxisRenderer
                 text: label,
                 point: CGPoint(x: p.x + xOffset, y: p.y - labelLineHeight),
                 align: alignment,
-                attributes: [
-                    NSAttributedString.Key.font: labelFont,
-                    NSAttributedString.Key.foregroundColor: labelTextColor
-                ])
+                attributes: labelAttributes)
         }
     }
     

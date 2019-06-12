@@ -132,8 +132,11 @@ open class YAxisRenderer: AxisRendererBase
             let yAxis = self.axis as? YAxis
             else { return }
         
-        let labelFont = yAxis.labelFont
-        let labelTextColor = yAxis.labelTextColor
+        var labelAttributes: [NSAttributedString.Key : Any] = [
+            .font: yAxis.labelFont,
+            .foregroundColor: yAxis.labelTextColor
+        ]
+        labelAttributes.merge(yAxis.labelAttributes) { (_, new) in new }
         
         let from = yAxis.isDrawBottomYLabelEntryEnabled ? 0 : 1
         let to = yAxis.isDrawTopYLabelEntryEnabled ? yAxis.entryCount : (yAxis.entryCount - 1)
@@ -147,7 +150,7 @@ open class YAxisRenderer: AxisRendererBase
                 text: text,
                 point: CGPoint(x: fixedPosition, y: positions[i].y + offset),
                 align: textAlign,
-                attributes: [NSAttributedString.Key.font: labelFont, NSAttributedString.Key.foregroundColor: labelTextColor])
+                attributes: labelAttributes)
         }
     }
     
