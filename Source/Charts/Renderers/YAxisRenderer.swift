@@ -76,7 +76,7 @@ open class YAxisRenderer: AxisRendererBase
             context: context,
             fixedPosition: xPos,
             positions: transformedPositions(),
-            offset: yoffset - yAxis.labelFont.lineHeight,
+            offset: yoffset - yAxis.labelFont.lineHeight - 4,
             textAlign: textAlign)
     }
     
